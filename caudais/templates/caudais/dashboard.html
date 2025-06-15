@@ -3829,14 +3829,14 @@ console.log(comparisonInstantaneousData);
                                     <h5 style="margin-bottom: 0.5rem; color: #0077b6;">${serieName}</h5>
                                     <p style="margin: 0 0 0.5rem 0; font-size: 12px; color: #6c757d;"><em>Período: ${formatPeriod()}</em></p>
                                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.3rem; font-size: 14px;">
-                                        <p><strong>Total:</strong> ${dados.length.toLocaleString('pt-PT')}</p>
-                                        <p><strong>Média:</strong> ${media.toLocaleString('pt-PT', { minimumFractionDigits: 3 })} m³/s</p>
-                                        <p><strong>Máximo:</strong> ${max.toLocaleString('pt-PT', { minimumFractionDigits: 3 })} m³/s</p>
-                                        <p><strong>Mínimo:</strong> ${min.toLocaleString('pt-PT', { minimumFractionDigits: 3 })} m³/s</p>
-                                        <p><strong>Mediana:</strong> ${mediana.toLocaleString('pt-PT', { minimumFractionDigits: 3 })} m³/s</p>
-                                        <p><strong>Amplitude:</strong> ${(max - min).toLocaleString('pt-PT', { minimumFractionDigits: 3 })} m³/s</p>
-                                        <p><strong>Desvio Padrão:</strong> ${desvioPadrao.toLocaleString('pt-PT', { minimumFractionDigits: 3 })} m³/s</p>
-                                        <p><strong>Variância:</strong> ${variancia.toLocaleString('pt-PT', { minimumFractionDigits: 3 })} (m³/s)²</p>
+                                        <p><strong>Total:</strong> ${dados.length.toLocaleString()}</p>
+                                        <p><strong>Média:</strong> ${media.toFixed(3)} m³/s</p>
+                                        <p><strong>Máximo:</strong> ${max.toFixed(3)} m³/s</p>
+                                        <p><strong>Mínimo:</strong> ${min.toFixed(3)} m³/s</p>
+                                        <p><strong>Mediana:</strong> ${mediana.toFixed(3)} m³/s</p>
+                                        <p><strong>Amplitude:</strong> ${(max - min).toFixed(3)} m³/s</p>
+                                        <p><strong>Desvio Padrão:</strong> ${desvioPadrao.toFixed(3)} m³/s</p>
+                                        <p><strong>Variância:</strong> ${variancia.toFixed(3)} (m³/s)²</p>
                                     </div>
                                 </div>
                             `;
@@ -3883,14 +3883,14 @@ console.log(comparisonInstantaneousData);
                         ">
                             <h5 style="margin-bottom: 0.5rem; color: #343a40;">Estatísticas Globais (todas as séries)</h5>
                             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.3rem; font-size: 14px;">
-                                <p><strong>Total:</strong> ${combinedValues.length.toLocaleString('pt-PT')}</p>
-                                <p><strong>Média:</strong> ${mediaG.toLocaleString('pt-PT', { minimumFractionDigits: 3 })} m³/s</p>
-                                <p><strong>Máximo:</strong> ${maxG.toLocaleString('pt-PT', { minimumFractionDigits: 3 })} m³/s</p>
-                                <p><strong>Mínimo:</strong> ${minG.toLocaleString('pt-PT', { minimumFractionDigits: 3 })} m³/s</p>
-                                <p><strong>Mediana:</strong> ${medianaG.toLocaleString('pt-PT', { minimumFractionDigits: 3 })} m³/s</p>
-                                <p><strong>Amplitude:</strong> ${(maxG - minG).toLocaleString('pt-PT', { minimumFractionDigits: 3 })} m³/s</p>
-                                <p><strong>Desvio Padrão:</strong> ${desvioPadraoG.toLocaleString('pt-PT', { minimumFractionDigits: 3 })} m³/s</p>
-                                <p><strong>Variância:</strong> ${varianciaG.toLocaleString('pt-PT', { minimumFractionDigits: 3 })} (m³/s)²</p>
+                                <p><strong>Total:</strong> ${combinedValues.length.toLocaleString()}</p>
+                                <p><strong>Média:</strong> ${mediaG.toFixed(3)} m³/s</p>
+                                <p><strong>Máximo:</strong> ${maxG.toFixed(3)} m³/s</p>
+                                <p><strong>Mínimo:</strong> ${minG.toFixed(3)} m³/s</p>
+                                <p><strong>Mediana:</strong> ${medianaG.toFixed(3)} m³/s</p>
+                                <p><strong>Amplitude:</strong> ${(maxG - minG).toFixed(3)} m³/s</p>
+                                <p><strong>Desvio Padrão:</strong> ${desvioPadraoG.toFixed(3)} m³/s</p>
+                                <p><strong>Variância:</strong> ${varianciaG.toFixed(3)} (m³/s)²</p>
                             </div>
                         </div>
                     `;
@@ -3938,14 +3938,14 @@ console.log(comparisonInstantaneousData);
                             max-width: 500px;
                         ">
                             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.3rem; font-size: 14px;">
-                                <p><strong>Total:</strong> ${dados.length.toLocaleString('pt-PT')}</p>
-                                <p><strong>Média:</strong> ${media.toLocaleString('pt-PT', { minimumFractionDigits: 3 })} m³/s</p>
-                                <p><strong>Máximo:</strong> ${max.toLocaleString('pt-PT', { minimumFractionDigits: 3 })} m³/s</p>
-                                <p><strong>Mínimo:</strong> ${min.toLocaleString('pt-PT', { minimumFractionDigits: 3 })} m³/s</p>
-                                <p><strong>Mediana:</strong> ${mediana.toLocaleString('pt-PT', { minimumFractionDigits: 3 })} m³/s</p>
-                                <p><strong>Amplitude:</strong> ${(max - min).toLocaleString('pt-PT', { minimumFractionDigits: 3 })} m³/s</p>
-                                <p><strong>Desvio Padrão:</strong> ${desvioPadrao.toLocaleString('pt-PT', { minimumFractionDigits: 3 })} m³/s</p>
-                                <p><strong>Variância:</strong> ${variancia.toLocaleString('pt-PT', { minimumFractionDigits: 3 })} (m³/s)²</p>
+                                <p><strong>Total:</strong> ${dados.length.toLocaleString()}</p>
+                                <p><strong>Média:</strong> ${media.toFixed(3)} m³/s</p>
+                                <p><strong>Máximo:</strong> ${max.toFixed(3)} m³/s</p>
+                                <p><strong>Mínimo:</strong> ${min.toFixed(3)} m³/s</p>
+                                <p><strong>Mediana:</strong> ${mediana.toFixed(3)} m³/s</p>
+                                <p><strong>Amplitude:</strong> ${(max - min).toFixed(3)} m³/s</p>
+                                <p><strong>Desvio Padrão:</strong> ${desvioPadrao.toFixed(3)} m³/s</p>
+                                <p><strong>Variância:</strong> ${variancia.toFixed(3)} (m³/s)²</p>
                             </div>
                         </div>
                     `;
