@@ -19,7 +19,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'dev-secret-key')
 # DEBUG também pode vir do ambiente (para controlar ambiente prod/dev)
 DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = ['nicoleArq.pythonanywhere.com', '127.0.0.1', '127.0.0.1:8000','localhost']
+ALLOWED_HOSTS = ['nicoleArq.pythonanywhere.com', '127.0.0.1', '127.0.0.1:8000','localhost','caudais.pw.deisi.ulusofona.pt']
 
 # Application definition
 INSTALLED_APPS = [
@@ -83,6 +83,9 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
+
+CSRF_TRUSTED_ORIGINS = ['https://caudais.pw.deisi.ulusofona.pt']
+
 
 # Internationalization
 LANGUAGE_CODE = 'en-us'
