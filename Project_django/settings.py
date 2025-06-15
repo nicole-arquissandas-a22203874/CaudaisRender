@@ -92,9 +92,9 @@ USE_TZ = True
 
 # Static files
 STATIC_URL = '/static/'
-MEDIA_ROOT = '/home/nicoleArq/Project_django/media'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
-STATIC_ROOT = '/home/nicoleArq/Project_django/static'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
