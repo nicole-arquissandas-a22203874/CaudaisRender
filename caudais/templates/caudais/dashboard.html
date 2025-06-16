@@ -30,27 +30,7 @@
               padding: 20px;
           }
   
-          .dark-mode {
-              background-color: #1a1a1a;
-              color: #f1f1f1;
-          }
-  
-          .dark-mode .chart-container,
-          .dark-mode form,
-          .dark-mode table.small-table,
-          .dark-mode .dropdown-menu {
-              background-color: #2c2c2c;
-              color: #f1f1f1;
-          }
-  
-          .dark-mode table.small-table th {
-              background-color: #444;
-              color: #fff;
-          }
-  
-          .dark-mode .dropdown-menu a {
-              color: #f1f1f1;
-          }
+        
   
           h1 {
               text-align: center;
@@ -235,14 +215,7 @@
               color: var(--cinza-escuro);
           }
   
-          .dark-mode .menu-toggle {
-              background-color: #2c2c2c;
-          }
-  
-          .dark-mode .menu-toggle i {
-              color: #f1f1f1;
-          }
-  
+        
           .dropdown-menu {
               display: none;
               position: fixed;
@@ -369,27 +342,6 @@
               border-left: 3px solid #dc3545;
           }
 
-          .dark-mode #series_years_selectors .form-group {
-              background-color: #3c3c3c;
-              border-color: #555;
-          }
-
-          .dark-mode #series_years_selectors label {
-              color: #f1f1f1;
-          }
-
-          .dark-mode .years-grid {
-              background-color: #2c2c2c;
-              border-color: #555;
-          }
-
-          .dark-mode .year-checkbox-item label {
-              color: #f1f1f1;
-          }
-
-          .dark-mode .year-checkbox-item label {
-              color: #f1f1f1;
-          }
 
           .auto-fill-info {
               margin-bottom: 10px;
@@ -400,10 +352,7 @@
               color: #1565c0;
           }
 
-          .dark-mode .auto-fill-info {
-              background-color: #2c3e50;
-              color: #74b9ff;
-          }
+        
 
           @keyframes slideIn {
               from {
@@ -453,7 +402,6 @@
         <a href="{% url 'caudais:upload_novo_ponto' %}"><i class="fas fa-upload"></i> Upload de Medições</a>
         <a href="#" onclick="exportarExcel()"><i class="fas fa-file-excel"></i> Exportar para Excel</a>
         <a href="#" onclick="exportarPDF()"><i class="fas fa-file-pdf"></i> Gerar Relatório (PDF)</a>
-        <a href="#" onclick="toggleTheme()"><i class="fas fa-adjust"></i> Alternar Modo Claro/Escuro</a>
         <a href="{% url 'autenticacao:logout' %}"><i class="fas fa-sign-out-alt"></i> Logout</a>
     </div>
 
@@ -810,8 +758,8 @@
 //console.log("Total de valores:", linhaTemporalValoresT.length);
 //console.log("Número de valores null:", linhaTemporalValoresT.filter(v => v === null).length);
         const getScalesOptions = () => {
-            const isDark = document.body.classList.contains('dark-mode');
-            const color = isDark ? '#ffffff' : '#000000';
+           
+            const color = '#000000';
             return {
                 x: {
                     beginAtZero: true,
@@ -1255,13 +1203,13 @@ document.getElementById("serie_id").addEventListener("change", function () {
                             responsive: true,
                             scales: {
                                 x: {
-                                    title: { display: true, text: 'Mês', color: document.body.classList.contains('dark-mode') ? '#ffffff' : '#000000' },
-                                    ticks: { color: document.body.classList.contains('dark-mode') ? '#ffffff' : '#000000' }
+                                    title: { display: true, text: 'Mês', color:'#000000' },
+                                    ticks: { color:'#000000' }
                                 },
                                 y: {
                                     beginAtZero: true,
-                                    title: { display: true, text: 'Média (m³/s)', color: document.body.classList.contains('dark-mode') ? '#ffffff' : '#000000' },
-                                    ticks: { color: document.body.classList.contains('dark-mode') ? '#ffffff' : '#000000' }
+                                    title: { display: true, text: 'Média (m³/s)', color:'#000000' },
+                                    ticks: { color: '#000000' }
                                 }
                             },
                             plugins: {
@@ -1283,21 +1231,21 @@ document.getElementById("serie_id").addEventListener("change", function () {
                             responsive: true,
                             scales: {
                                 x: {
-                                    title: { display: true, text: 'Mês', color: document.body.classList.contains('dark-mode') ? '#ffffff' : '#000000' },
-                                    ticks: { color: document.body.classList.contains('dark-mode') ? '#ffffff' : '#000000' }
+                                    title: { display: true, text: 'Mês', color:'#000000' },
+                                    ticks: { color:'#000000' }
                                 },
                                 y: {
                                     beginAtZero: true,
                                     position: 'left',
-                                    title: { display: true, text: 'Média (m³/s)', color: document.body.classList.contains('dark-mode') ? '#ffffff' : '#000000' },
-                                    ticks: { color: document.body.classList.contains('dark-mode') ? '#ffffff' : '#000000' }
+                                    title: { display: true, text: 'Média (m³/s)', color: '#000000' },
+                                    ticks: { color:'#000000' }
                                 },
                                 y1: {
                                     beginAtZero: true,
                                     position: 'right',
                                     grid: { drawOnChartArea: false },
-                                    title: { display: true, text: 'Total (L)', color: document.body.classList.contains('dark-mode') ? '#ffffff' : '#000000' },
-                                    ticks: { color: document.body.classList.contains('dark-mode') ? '#ffffff' : '#000000' }
+                                    title: { display: true, text: 'Total (L)', color: '#000000' },
+                                    ticks: { color:  '#000000' }
                                 }
                             },
                             plugins: {
@@ -1330,17 +1278,17 @@ document.getElementById("serie_id").addEventListener("change", function () {
                             responsive: true,
                             scales: {
                                 x: {
-                                    title: { display: true, text: 'Mês', color: document.body.classList.contains('dark-mode') ? '#ffffff' : '#000000' },
-                                    ticks: { color: document.body.classList.contains('dark-mode') ? '#ffffff' : '#000000' }
+                                    title: { display: true, text: 'Mês', color: '#000000' },
+                                    ticks: { color: '#000000' }
                                 },
                                 y: {
                                     beginAtZero: true,
                                     title: {
                                         display: true,
                                         text: 'Caudal Médio (m³/s)',
-                                        color: document.body.classList.contains('dark-mode') ? '#ffffff' : '#000000'
+                                        color: '#000000'
                                     },
-                                    ticks: { color: document.body.classList.contains('dark-mode') ? '#ffffff' : '#000000' }
+                                    ticks: { color: '#000000' }
                                 }
                             },
                             plugins: {
@@ -1443,8 +1391,8 @@ document.getElementById("serie_id").addEventListener("change", function () {
                 }
             }
 
-            const isDark = document.body.classList.contains('dark-mode');
-            const textColor = isDark ? '#ffffff' : '#000000';
+           
+            const textColor ='#000000';
 
             const boxplotConfig = {
                 type: 'boxplot',
@@ -1537,8 +1485,8 @@ document.getElementById("serie_id").addEventListener("change", function () {
         }
 
         function createComparisonBoxplot(comparisonData, months) {
-            const isDark = document.body.classList.contains('dark-mode');
-            const textColor = isDark ? '#ffffff' : '#000000';
+          
+            const textColor = '#000000';
             
             const datasets = [];
             const colorPalette = [
@@ -1688,7 +1636,7 @@ document.getElementById("serie_id").addEventListener("change", function () {
                                 font: { size: 12 }
                             },
                             grid: {
-                                color: isDark ? '#444' : '#e0e0e0'
+                                color: '#e0e0e0'
                             }
                         },
                         y: {
@@ -1707,7 +1655,7 @@ document.getElementById("serie_id").addEventListener("change", function () {
                                 }
                             },
                             grid: {
-                                color: isDark ? '#444' : '#e0e0e0'
+                                color: '#e0e0e0'
                             }
                         }
                     }
@@ -1728,8 +1676,8 @@ document.getElementById("serie_id").addEventListener("change", function () {
         }
 
         function createAlternativeComparisonBoxplot(comparisonData, months) {
-            const isDark = document.body.classList.contains('dark-mode');
-            const textColor = isDark ? '#ffffff' : '#000000';
+          
+            const textColor = '#000000';
             
             const datasets = [];
             const colorPalette = [
@@ -1879,7 +1827,7 @@ document.getElementById("serie_id").addEventListener("change", function () {
                                 font: { size: 12 }
                             },
                             grid: {
-                                color: isDark ? '#444' : '#e0e0e0'
+                                color: '#e0e0e0'
                             }
                         },
                         y: {
@@ -1898,7 +1846,7 @@ document.getElementById("serie_id").addEventListener("change", function () {
                                 }
                             },
                             grid: {
-                                color: isDark ? '#444' : '#e0e0e0'
+                                color:'#e0e0e0'
                             }
                         }
                     }
@@ -1949,8 +1897,8 @@ document.getElementById("serie_id").addEventListener("change", function () {
                 }
             });
 
-             const isDark = document.body.classList.contains('dark-mode');
-             const color = isDark ? '#ffffff' : '#000000';
+             
+             const color = '#000000';
 
             const alternativeConfig = {
                 type: 'line',
@@ -2072,7 +2020,7 @@ document.getElementById("serie_id").addEventListener("change", function () {
                                 font: { size: 12 }
                             },
                             grid: {
-                                color: isDark ? '#444' : '#e0e0e0'
+                                color: '#e0e0e0'
                             }
                         },
                         y: {
@@ -2091,7 +2039,7 @@ document.getElementById("serie_id").addEventListener("change", function () {
                                 }
                             },
                             grid: {
-                                color: isDark ? '#444' : '#e0e0e0'
+                                color: '#e0e0e0'
                             }
                         }
                     }
@@ -2125,8 +2073,8 @@ document.getElementById("serie_id").addEventListener("change", function () {
                 return;
             }
 
-            const isDark = document.body.classList.contains('dark-mode');
-            const textColor = isDark ? '#ffffff' : '#000000';
+           
+            const textColor = '#000000';
 
             const dailyConfig = {
                 type: 'line',
@@ -2197,8 +2145,8 @@ document.getElementById("serie_id").addEventListener("change", function () {
         }
 
         function createComparisonDailyLineChart(comparisonData) {
-            const isDark = document.body.classList.contains('dark-mode');
-            const textColor = isDark ? '#ffffff' : '#000000';
+          
+            const textColor ='#000000';
 
             const colorPalette = [
                 '#0077b6', '#f77f00', '#c9184a', '#0d8f5f', '#6a0572', '#fb8500',
@@ -2607,14 +2555,14 @@ document.getElementById("serie_id").addEventListener("change", function () {
         function showAutoFillNotification(selectedYears, serieId) {
             
             const notification = document.createElement('div');
-            const isDarkMode = document.body.classList.contains('dark-mode');
+           
             
             notification.style.position = 'fixed';
             notification.style.top = '20px';
             notification.style.right = '20px';
-            notification.style.backgroundColor = isDarkMode ? '#2c3e50' : '#d4edda';
-            notification.style.color = isDarkMode ? '#74b9ff' : '#155724';
-            notification.style.border = isDarkMode ? '1px solid #74b9ff' : '1px solid #c3e6cb';
+            notification.style.backgroundColor ='#d4edda';
+            notification.style.color = '#155724';
+            notification.style.border = '1px solid #c3e6cb';
             notification.style.borderRadius = '8px';
             notification.style.padding = '12px 16px';
             notification.style.zIndex = '9999';
@@ -2626,7 +2574,7 @@ document.getElementById("serie_id").addEventListener("change", function () {
             const seriesName = document.querySelector(`input[value="${serieId}"]`).parentElement.querySelector('label').textContent;
             notification.innerHTML = `
                 <div style="display: flex; align-items: flex-start; gap: 8px;">
-                    <i class="fas fa-check-circle" style="margin-top: 2px; color: ${isDarkMode ? '#74b9ff' : '#0077b6'};"></i> 
+                    <i class="fas fa-check-circle" style="margin-top: 2px; color:'#0077b6'};"></i> 
                     <div>
                         <strong>Anos selecionados automaticamente:</strong><br>
                         <small>${seriesName}: ${selectedYears.join(', ')}</small>
@@ -2674,20 +2622,9 @@ document.getElementById("serie_id").addEventListener("change", function () {
             }
         });
 
-        if (localStorage.getItem('modoEscuro') === 'ativo') {
-            document.body.classList.add('dark-mode');
-            updateChartsTheme();
-        }
+       
 
-        function toggleTheme() {
-            document.body.classList.toggle("dark-mode");
-            if (document.body.classList.contains('dark-mode')) {
-                localStorage.setItem('modoEscuro', 'ativo');
-            } else {
-                localStorage.setItem('modoEscuro', 'inativo');
-            }
-            updateChartsTheme();
-        }
+       
 
         function showLoading() {
             const loadingSpinner = document.getElementById('loading-spinner');
@@ -3301,8 +3238,8 @@ async function exportarExcel() {
 
         
         function createLinhaCharts() {
-            const isDark = document.body.classList.contains('dark-mode');
-            const textColor = isDark ? '#ffffff' : '#000000';
+          
+            const textColor = '#000000';
             
             
             if (comparisonMode && Object.keys(comparisonLineChartData).length > 0) {
@@ -3480,8 +3417,8 @@ async function exportarExcel() {
 
         
         function createComparisonLinhaCharts() {
-            const isDark = document.body.classList.contains('dark-mode');
-            const textColor = isDark ? '#ffffff' : '#000000';
+         
+            const textColor = '#000000';
             
             const colorPalette = [
                 '#0077b6', '#f77f00', '#c9184a', '#0d8f5f', '#6a0572', '#fb8500',
