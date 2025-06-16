@@ -545,7 +545,7 @@
     <!-- Complete Line Charts -->
     {% if data_type == 'normalized' or data_type == 'reconstruido' %}
     <div class="chart-container">
-        <h2>Gráfico de Linha Completo - Todos os Instantes</h2>
+        <h2>Evolução de Caudal</h2>
         <canvas id="linhaDiariaChartT" height="100"></canvas>
         <button onclick="resetZoom('linhaDiariaChartT')">Redefinir Zoom</button>
         <div style="margin-top: 1rem; display: flex; flex-wrap: wrap; gap: 15px; align-items: end;">
@@ -620,9 +620,9 @@
     <div class="chart-container">
         <h2>
             {% if comparison_mode %}
-                Contagem Mensal - Comparação
+                Contagem De Entradas Mensal - Comparação
             {% else %}
-                Contagem Mensal - Ano {{ selected_year }}
+                Contagem De Entradas Mensal - Ano {{ selected_year }}
             {% endif %}
         </h2>
         
@@ -3360,7 +3360,7 @@ async function exportarExcel() {
                         scales: {
                             x: {
                                 type: 'category',
-                                title: { display: true, text: 'Timestamp (Todos os Instantes)', color: textColor },
+                                title: { display: true, text: 'Timestamp', color: textColor },
                                 ticks: {
                                     maxTicksLimit: 10,
                                     autoSkip: true,
@@ -3637,7 +3637,7 @@ async function exportarExcel() {
                         scales: {
                             x: {
                                 type: 'category',
-                                title: { display: true, text: 'Timestamp (Todos os Instantes)', color: textColor },
+                                title: { display: true, text: 'Timestamp', color: textColor },
                                 ticks: {
                                     maxTicksLimit: 10,
                                     autoSkip: true,
