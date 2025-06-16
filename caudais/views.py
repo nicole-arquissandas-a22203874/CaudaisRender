@@ -53,7 +53,7 @@ def calculate_boxplot_data(queryset, selected_serie=None, metodo='raw', selected
                 "mean": float(est.media),
                 "q3": float(est.q3),
                 "max": float(est.maxWhisker),
-                "outliers": [float(x) for x in outliers] if outliers else []
+                "outliers": [float(x) for x in outliers if x is not None] if outliers else []
             }
 
     else:
@@ -827,7 +827,9 @@ def dashboard(request):
                     'month_labels': [int(m) for m in month_labels],
                     'month_counts': [int(c) for c in month_counts],
                     'month_totals': [float(t) for t in month_totals],
-                    'month_avg': [float(a) for a in month_avg]
+                    'month_avg': [float(a) for a in month_avg],
+                    'month_expected': [calendar.monthrange(year_to_process, m)[1] * 96 for m in range(1, 13)] if data_type in ('normalized', 'reconstruido') else [],
+                    'month_gaps': [max((calendar.monthrange(year_to_process, m)[1] * 96) - month_counts[m-1], 0) for m in range(1, 13)] if data_type in ('normalized', 'reconstruido') else []
                 }
         else:
             
@@ -1260,7 +1262,9 @@ def dashboard(request):
                 'month_labels': [int(m) for m in month_labels],
                 'month_counts': [int(c) for c in month_counts],
                 'month_totals': [float(t) for t in month_totals],
-                'month_avg': [float(a) for a in month_avg]
+                'month_avg': [float(a) for a in month_avg],
+                'month_expected': [calendar.monthrange(year_for_monthly, m)[1] * 96 for m in range(1, 13)] if (data_type in ('normalized', 'reconstruido') and year_for_monthly) else [],
+                'month_gaps': [max((calendar.monthrange(year_for_monthly, m)[1] * 96) - month_counts[m-1], 0) for m in range(1, 13)] if (data_type in ('normalized', 'reconstruido') and year_for_monthly) else []
             }
 
     if not selected_year_final and all_years:
@@ -1390,6 +1394,31 @@ def dashboard(request):
 
     month_names=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro']
     
+    # Gaps
+    gap_table_rows = []
+    total_expected = 0
+    total_gaps = 0
+    if series_data:
+        first_key = list(series_data.keys())[0]
+        first_entry = series_data[first_key]
+        if 'month_expected' in first_entry and first_entry['month_expected']:
+            me = first_entry['month_expected']
+            mg = first_entry['month_gaps']
+            ml = first_entry['month_labels']
+            for idx, month_num in enumerate(ml):
+                label_txt = month_names[month_num-1] if 1 <= month_num <= 12 else str(month_num)
+                expected_val = me[idx]
+                gap_val = mg[idx]
+                percent_val = round((gap_val / expected_val * 100) if expected_val else 0, 1)
+                gap_table_rows.append({
+                    'label': label_txt,
+                    'gap': gap_val,
+                    'expected': expected_val,
+                    'percent': percent_val
+                })
+            total_expected = sum(me)
+            total_gaps = sum(mg)
+ 
     context = {
         'pontos_medicao': pontos_medicao,
         'series': series,
@@ -1423,6 +1452,10 @@ def dashboard(request):
         'linha_temporal_valores': valores_grafico_linhas if 'valores_grafico_linhas' in locals() else [],
         'linha_temporal_labelsT': labels_grafico_linhasT if 'labels_grafico_linhasT' in locals() else [],
         'linha_temporal_valoresT': valores_grafico_linhasT if 'valores_grafico_linhasT' in locals() else [],
+        'gap_table_rows': gap_table_rows,
+        'total_expected': total_expected,
+        'total_gaps': total_gaps,
+        'total_gap_percent': round((total_gaps / total_expected * 100), 1) if total_expected else 0,
     }
 
     return render(request, 'caudais/dashboard.html', context)

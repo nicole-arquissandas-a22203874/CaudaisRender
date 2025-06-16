@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Dashboard de Medições</title>
 
-      <!-- Font Awesome atualizado -->
+      <!-- Font Awesome -->
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
       <!-- Chart.js e plugin de zoom -->
@@ -514,7 +514,6 @@
             </select>
         </div>
 
-        <!-- Single series year selector -->
         <div class="form-group" id="single_year_group" {% if comparison_mode %}style="display:none;"{% endif %}>
             <label for="year">Ano:</label>
             <select name="year" id="year">
@@ -524,7 +523,6 @@
             </select>
         </div>
 
-        <!-- Per-series year selectors for comparison mode -->
         <div id="comparison_years_container" {% if not comparison_mode %}style="display:none;"{% endif %}>
             <div id="series_years_selectors">
             </div>
@@ -596,7 +594,7 @@
         <button onclick="resetZoom('dailyLineChart')">Redefinir Zoom</button>
     </div>
 
-    <!-- Complete Line Charts for Normalized/Reconstructed Data -->
+    <!-- Complete Line Charts -->
     {% if data_type == 'normalized' or data_type == 'reconstruido' %}
     <div class="chart-container">
         <h2>Gráfico de Linha Completo - Todos os Instantes</h2>
@@ -621,6 +619,51 @@
         <div id="resultadoEstatisticas"></div>
     </div>
 
+    <!-- Tabela para as falhas -->
+    <div class="chart-container">
+        <h2>
+            {% if comparison_mode %}
+                Falhas nos Dados - Comparação
+            {% else %}
+                Falhas nos Dados - Ano {{ selected_year }}
+            {% endif %}
+        </h2>
+
+        {% if comparison_mode and selected_series|length > 1 %}
+            <table class="small-table comparison-table" id="comparison-gap-table">
+                <thead id="comparison-gap-header"></thead>
+                <tbody id="comparison-gap-body"></tbody>
+            </table>
+        {% else %}
+            <table class="small-table">
+                <thead>
+                    <tr>
+                        <th>Mês</th>
+                        <th>Falhas</th>
+                        <th>Esperado</th>
+                        <th>% Falhas</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in gap_table_rows %}
+                    <tr>
+                        <td>{{ row.label }}</td>
+                        <td>{{ row.gap }}</td>
+                        <td>{{ row.expected }}</td>
+                        <td>{{ row.percent }}%</td>
+                    </tr>
+                    {% endfor %}
+                    <tr>
+                        <td><strong>Total</strong></td>
+                        <td>{{ total_gaps }}</td>
+                        <td>{{ total_expected }}</td>
+                        <td>{{ total_gap_percent }}%</td>
+                    </tr>
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
+
     {% endif %}
 
     <iframe id="download_iframe" style="display: none;"></iframe>
@@ -636,17 +679,14 @@
         </h2>
         
         {% if comparison_mode and selected_series|length > 1 %}
-            <!-- Comparison mode table - populated by JavaScript -->
+            <!-- Comparison mode table -->
             <table class="small-table comparison-table" id="comparison-count-table">
                 <thead id="comparison-count-header">
-                    <!-- Headers will be populated by JavaScript -->
                 </thead>
                 <tbody id="comparison-count-body">
-                    <!-- Data will be populated by JavaScript -->
                 </tbody>
             </table>
         {% else %}
-            <!-- Single series mode table -->
             <table class="small-table">
                 <thead>
                     <tr>
@@ -2782,54 +2822,82 @@ document.getElementById("serie_id").addEventListener("change", function () {
             setTimeout(showCacheStatus, 1000);
         });
 
-        function exportarExcel() {
-            showLoading();
-            const comparisonMode = document.getElementById('comparison_mode').checked;
-            let url;
-            
-            if (comparisonMode) {
-                const checkboxes = document.querySelectorAll('input[name="serie_ids"]:checked');
-                const serieIds = Array.from(checkboxes).map(cb => cb.value);
-                const tipo = document.getElementById('data_type').value;
-                const metodo = document.getElementById('recon_method').value;
-                
-                const params = new URLSearchParams();
-                serieIds.forEach(id => params.append('serie_ids', id));
-                params.append('data_type', tipo);
-                params.append('recon_method', metodo);
-                
-                
-                serieIds.forEach(serieId => {
-                    const yearCheckboxes = document.querySelectorAll(`input[name="years_${serieId}"]:checked`);
-                    yearCheckboxes.forEach(checkbox => {
-                        params.append(`years_${serieId}`, checkbox.value);
-                    });
+  
+async function exportarExcel() {
+    showLoading();
+    try {
+        const comparisonMode = document.getElementById('comparison_mode').checked;
+        let url;
+
+        if (comparisonMode) {
+            const checkboxes = document.querySelectorAll('input[name="serie_ids"]:checked');
+            const serieIds = Array.from(checkboxes).map(cb => cb.value);
+            const tipo = document.getElementById('data_type').value;
+            const metodo = document.getElementById('recon_method').value;
+
+            const params = new URLSearchParams();
+            serieIds.forEach(id => params.append('serie_ids', id));
+            params.append('data_type', tipo);
+            params.append('recon_method', metodo);
+
+            serieIds.forEach(serieId => {
+                const yearCheckboxes = document.querySelectorAll(`input[name="years_${serieId}"]:checked`);
+                yearCheckboxes.forEach(checkbox => {
+                    params.append(`years_${serieId}`, checkbox.value);
                 });
-                
-                url = `/caudais/exportar_excel/?${params.toString()}`;
-            } else {
-                const serie = document.getElementById('serie_id').value;
-                const tipo = document.getElementById('data_type').value;
-                const metodo = document.getElementById('recon_method').value;
-                const ano = document.getElementById('year').value;
-                
-                const params = new URLSearchParams();
-                params.append('serie_id', serie);
-                params.append('data_type', tipo);
-                params.append('recon_method', metodo);
-                if (ano) {
-                    
-                    params.append(`years_${serie}`, ano);
-                }
-                
-                url = `/caudais/exportar_excel/?${params.toString()}`;
+            });
+
+            url = `/caudais/exportar_excel/?${params.toString()}`;
+        } else {
+            const serie = document.getElementById('serie_id').value;
+            const tipo = document.getElementById('data_type').value;
+            const metodo = document.getElementById('recon_method').value;
+            const ano = document.getElementById('year').value;
+
+            const params = new URLSearchParams();
+            params.append('serie_id', serie);
+            params.append('data_type', tipo);
+            params.append('recon_method', metodo);
+            if (ano) {
+                params.append(`years_${serie}`, ano);
             }
 
-            const iframe = document.getElementById('download_iframe');
-            iframe.src = url;
-
-            setTimeout(hideLoading, 16000); 
+            url = `/caudais/exportar_excel/?${params.toString()}`;
         }
+
+        const response = await fetch(url);
+
+        if (!response.ok) {
+            hideLoading();
+            alert("Erro ao exportar: " + (await response.text()));
+            return;
+        }
+
+        const blob = await response.blob();
+
+        // Extrair nome do ficheiro do header
+        let filename = "relatorio.xlsx";
+        const disposition = response.headers.get("Content-Disposition");
+        if (disposition && disposition.includes("filename=")) {
+            const match = disposition.match(/filename="?([^"]+)"?/);
+            if (match && match[1]) {
+                filename = match[1];
+            }
+        }
+
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    } catch (error) {
+        alert("Erro na exportação: " + error.message);
+    } finally {
+        hideLoading();
+    }
+}
+
 
         // -------- PDF EXPORT ---------
         function getCSRF() {
@@ -3218,6 +3286,7 @@ document.getElementById("serie_id").addEventListener("change", function () {
             if (comparisonMode && Object.keys(seriesData).length > 1) {
                 setTimeout(() => {
                     populateComparisonCountTable();
+                    populateComparisonGapTable();
                 }, 600);
             }
         }
@@ -4119,6 +4188,68 @@ console.log(comparisonInstantaneousData);
         }
 
         logReportData();
+
+        // Gaps
+        function populateComparisonGapTable() {
+            const table = document.getElementById('comparison-gap-table');
+            if (!table || !comparisonMode || Object.keys(seriesData).length <= 1) {
+                return;
+            }
+
+            const monthNames = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
+                               'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+
+            const seriesArray = Object.keys(seriesData).map(key => seriesData[key]);
+            const header = document.getElementById('comparison-gap-header');
+            const body = document.getElementById('comparison-gap-body');
+
+            header.innerHTML = '';
+            body.innerHTML = '';
+
+            const headerRow = document.createElement('tr');
+            headerRow.appendChild(document.createElement('th')).textContent = 'Mês';
+
+            seriesArray.forEach(series => {
+                const th = document.createElement('th');
+                const selectedYear = series.selected_year || 'N/A';
+                th.textContent = `${series.serie.nome} (${selectedYear})`;
+                headerRow.appendChild(th);
+            });
+
+            header.appendChild(headerRow);
+
+            for (let month = 0; month < 12; month++) {
+                const row = document.createElement('tr');
+                const monthCell = document.createElement('td');
+                monthCell.textContent = monthNames[month];
+                row.appendChild(monthCell);
+
+                seriesArray.forEach(series => {
+                    const td = document.createElement('td');
+                    const gapVal = (series.month_gaps && series.month_gaps.length > month) ? series.month_gaps[month] : 0;
+                    td.textContent = gapVal;
+                    row.appendChild(td);
+                });
+                body.appendChild(row);
+            }
+
+            // Totais
+            const totalRow = document.createElement('tr');
+            const totLabel = document.createElement('td');
+            totLabel.innerHTML = '<strong>Total</strong>';
+            totalRow.appendChild(totLabel);
+
+            seriesArray.forEach(series => {
+                const gapsArr = series.month_gaps || [];
+                const expArr = series.month_expected || [];
+                const totalGaps = gapsArr.reduce((a,b)=>a+(b||0),0);
+                const totalExp = expArr.reduce((a,b)=>a+(b||0),0);
+                const td = document.createElement('td');
+                td.innerHTML = `${totalGaps} / ${totalExp} (${totalExp?((totalGaps/totalExp)*100).toFixed(1):0}%)`;
+                totalRow.appendChild(td);
+            });
+            body.appendChild(totalRow);
+        }
     </script>
     <iframe id="download_iframe" style="display: none;"></iframe>
 

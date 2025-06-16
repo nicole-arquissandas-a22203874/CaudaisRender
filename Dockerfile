@@ -40,4 +40,4 @@ RUN python manage.py collectstatic --noinput
 EXPOSE 3000
 
 # Comando de arranque (produção)
-CMD ["gunicorn", "--bind", "0.0.0.0:3000", "Project_django.wsgi:application"]
+CMD ["gunicorn", "--bind", "0.0.0.0:3000", "--timeout=86400","Project_django.wsgi:application"]
