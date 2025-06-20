@@ -1,0 +1,15 @@
+# render.yaml
+services:
+  - type: web
+    name: caudais
+    env: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    autoDeploy: true
+    envVars:
+      - key: DJANGO_DEBUG
+        value: "False"
+      - key: DJANGO_SECRET_KEY
+        value: your-secret-key
+      - key: DJANGO_SETTINGS_MODULE
+        value: Project_django.settings

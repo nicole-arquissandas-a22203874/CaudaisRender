@@ -30,6 +30,8 @@ import base64
 from reportlab.lib.pagesizes import A4
 from reportlab.lib import colors
 from reportlab.platypus import Table, TableStyle
+import uuid
+import os
 
 def calculate_boxplot_data(queryset, selected_serie=None, metodo='raw', selected_year=None, calcular=True):
     monthly_stats = {}
@@ -1593,7 +1595,7 @@ def exportar_excel(request):
                     
                     
                     year_suffix = f"_{'_'.join(map(str, year_filter))}" if year_filter else ""
-                    df.rename(columns={'timestamp': 'Data', 'valor': f'Caudal_{serie.nome}{year_suffix}'}, inplace=True)
+                    df.rename(columns={'timestamp': 'Data', 'valor': f'Caudal'}, inplace=True)
                     
                     
                     sheet_name_year = f"_{'_'.join(map(str, year_filter))}" if year_filter else ""
