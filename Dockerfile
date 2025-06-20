@@ -13,7 +13,10 @@ RUN apt-get update && apt-get install -y \
     libfreetype6-dev libpng-dev libjpeg-dev \
     libopenblas-dev gfortran \
     git curl nginx \
+    default-jre default-jdk \
+    libapparmor-dev libcairo2-dev \
     && apt-get clean
+
 
 # Create virtual environment
 ENV VIRTUAL_ENV=/opt/venv
@@ -26,6 +29,7 @@ RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Install R packages
+RUN Rscript -e "install.packages(c('rJava'), repos='http://cran.r-project.org')"
 RUN Rscript -e "install.packages(c('forecast','openxlsx','season','MASS','ggplot2','stats','gdata','survival','lubridate','robustbase','matrixStats','xlsx'), repos='http://cran.r-project.org')"
 
 # Copy the rest of the project
