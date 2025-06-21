@@ -19,7 +19,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'dev-secret-key')
 # DEBUG também pode vir do ambiente (para controlar ambiente prod/dev)
 DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = ['nicoleArq.pythonanywhere.com', '127.0.0.1', '127.0.0.1:8000','localhost','caudais.pw.deisi.ulusofona.pt']
+ALLOWED_HOSTS = ['nicoleArq.pythonanywhere.com', '127.0.0.1', '127.0.0.1:8000','localhost','caudais.pw.deisi.ulusofona.pt','caudaisrender.onrender.com']
 
 # Application definition
 INSTALLED_APPS = [
@@ -84,7 +84,7 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-CSRF_TRUSTED_ORIGINS = ['https://caudais.pw.deisi.ulusofona.pt']
+CSRF_TRUSTED_ORIGINS = ['https://caudais.pw.deisi.ulusofona.pt','caudaisrender.onrender.com']
 
 
 # Internationalization
@@ -105,6 +105,3 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MAILGUN_API_KEY = os.environ.get('MAILGUN_API_KEY', '')
 MAILGUN_DOMAIN = os.environ.get('MAILGUN_DOMAIN', '')
 DATA_UPLOAD_MAX_MEMORY_SIZE = 20 * 1024 * 1024 
-RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
-if RENDER_EXTERNAL_HOSTNAME:
-    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
